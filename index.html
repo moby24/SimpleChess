@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Chess</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <p class="eyebrow">Pass-and-play chess</p>
+      <h1>Simple Chess For Two Real Players</h1>
+      <p class="hero-copy">
+        One browser, one board, full legal rules. White and black take turns on the same screen.
+      </p>
+    </section>
+
+    <section class="game-layout" aria-label="Chess game">
+      <div class="board-panel">
+        <div class="board-header">
+          <div>
+            <p class="panel-label">Game status</p>
+            <p id="status" class="status-text">Loading board...</p>
+          </div>
+          <button id="reset-button" class="reset-button" type="button">New Game</button>
+        </div>
+
+        <div class="board-frame">
+          <div id="file-labels-top" class="axis-labels axis-top" aria-hidden="true"></div>
+          <div class="board-body">
+            <div id="rank-labels-left" class="rank-labels" aria-hidden="true"></div>
+            <div id="board" class="board" role="grid" aria-label="Chess board"></div>
+            <div id="rank-labels-right" class="rank-labels" aria-hidden="true"></div>
+          </div>
+          <div id="file-labels-bottom" class="axis-labels axis-bottom" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <section class="info-card">
+          <p class="panel-label">Turn</p>
+          <p id="turn-indicator" class="turn-indicator">White to move</p>
+        </section>
+
+        <section class="info-card">
+          <div class="sidebar-heading">
+            <p class="panel-label">Moves</p>
+            <button id="clear-selection-button" class="ghost-button" type="button">Clear Selection</button>
+          </div>
+          <ol id="move-list" class="move-list" aria-live="polite"></ol>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <div id="promotion-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="promotion-title">
+    <div class="modal-card">
+      <p class="panel-label">Pawn promotion</p>
+      <h2 id="promotion-title">Choose a piece</h2>
+      <div id="promotion-options" class="promotion-options"></div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

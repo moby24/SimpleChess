@@ -1,0 +1,355 @@
+﻿:root {
+  --bg: #f3efe2;
+  --bg-accent: #e9dcc2;
+  --panel: rgba(255, 252, 245, 0.84);
+  --panel-border: rgba(75, 52, 33, 0.12);
+  --text: #2b221b;
+  --muted: #73614f;
+  --light-square: #f6eddc;
+  --dark-square: #b07d52;
+  --selected: #e89d3c;
+  --legal: rgba(29, 122, 72, 0.35);
+  --capture: rgba(151, 38, 38, 0.28);
+  --button: #1f5f4a;
+  --button-hover: #174737;
+  --button-text: #f6f1e7;
+  --shadow: 0 24px 60px rgba(71, 47, 27, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.55), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(176, 125, 82, 0.18), transparent 35%),
+    linear-gradient(135deg, var(--bg), var(--bg-accent));
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+
+.hero {
+  padding: 1rem 0 1.75rem;
+}
+
+.eyebrow,
+.panel-label {
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: "Fraunces", serif;
+  font-size: clamp(2.2rem, 5vw, 4.4rem);
+  line-height: 0.96;
+  max-width: 11ch;
+}
+
+.hero-copy {
+  max-width: 46rem;
+  margin: 1rem 0 0;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(290px, 0.7fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.board-panel,
+.info-card {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.board-panel {
+  padding: 1.15rem;
+}
+
+.board-header,
+.sidebar-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: start;
+}
+
+.status-text,
+.turn-indicator {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.reset-button,
+.ghost-button,
+.promotion-button {
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 140ms ease, background-color 140ms ease, opacity 140ms ease;
+}
+
+.reset-button {
+  padding: 0.8rem 1.15rem;
+  background: var(--button);
+  color: var(--button-text);
+}
+
+.reset-button:hover,
+.reset-button:focus-visible,
+.promotion-button:hover,
+.promotion-button:focus-visible {
+  background: var(--button-hover);
+  transform: translateY(-1px);
+}
+
+.ghost-button {
+  background: transparent;
+  color: var(--muted);
+  padding: 0.15rem 0;
+}
+
+.ghost-button:hover,
+.ghost-button:focus-visible {
+  color: var(--text);
+}
+
+.board-frame {
+  margin-top: 1rem;
+}
+
+.board-body {
+  display: grid;
+  grid-template-columns: 1.35rem minmax(0, 1fr) 1.35rem;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  aspect-ratio: 1;
+  width: 100%;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(50, 34, 22, 0.1);
+}
+
+.square {
+  position: relative;
+  display: grid;
+  place-items: center;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.square.light {
+  background: var(--light-square);
+}
+
+.square.dark {
+  background: var(--dark-square);
+}
+
+.square.selected {
+  box-shadow: inset 0 0 0 5px rgba(232, 157, 60, 0.75);
+}
+
+.square.legal::after,
+.square.capture::after {
+  content: "";
+  position: absolute;
+  width: 26%;
+  height: 26%;
+  border-radius: 999px;
+  background: var(--legal);
+}
+
+.square.capture::after {
+  width: 68%;
+  height: 68%;
+  background: transparent;
+  border: 5px solid var(--capture);
+}
+
+.square:focus-visible {
+  outline: 3px solid rgba(20, 56, 43, 0.58);
+  outline-offset: -3px;
+}
+
+.piece-light,
+.piece-dark {
+  text-shadow: 0 2px 6px rgba(34, 24, 18, 0.12);
+}
+
+.piece-image {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 6px rgba(34, 24, 18, 0.14));
+}
+
+.axis-labels,
+.rank-labels {
+  display: grid;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.axis-labels {
+  grid-template-columns: repeat(8, 1fr);
+  margin: 0 1.85rem;
+}
+
+.axis-top {
+  margin-bottom: 0.35rem;
+}
+
+.axis-bottom {
+  margin-top: 0.35rem;
+}
+
+.rank-labels {
+  grid-template-rows: repeat(8, 1fr);
+  align-items: center;
+  justify-items: center;
+}
+
+.sidebar {
+  display: grid;
+  gap: 1rem;
+}
+
+.info-card {
+  padding: 1.1rem 1.1rem 1.2rem;
+}
+
+.move-list {
+  margin: 0.85rem 0 0;
+  padding-left: 1.5rem;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.move-list li {
+  margin-bottom: 0.5rem;
+  color: var(--muted);
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(26, 18, 12, 0.48);
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-card {
+  width: min(420px, 100%);
+  background: #fbf7ef;
+  border-radius: 24px;
+  padding: 1.4rem;
+  box-shadow: var(--shadow);
+}
+
+.modal-card h2 {
+  margin: 0;
+  font-family: "Fraunces", serif;
+  font-size: 2rem;
+}
+
+.promotion-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+  margin-top: 1.2rem;
+}
+
+.promotion-button {
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+  padding: 0.95rem;
+  background: var(--button);
+  color: var(--button-text);
+}
+
+.promotion-image {
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+}
+
+@media (max-width: 940px) {
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .move-list {
+    max-height: 240px;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    width: min(100% - 1rem, 100%);
+    padding-top: 1rem;
+  }
+
+  .board-panel,
+  .info-card {
+    border-radius: 18px;
+  }
+
+  .board-panel,
+  .info-card,
+  .modal-card {
+    padding: 0.95rem;
+  }
+
+  .board-body {
+    gap: 0.3rem;
+    grid-template-columns: 1rem minmax(0, 1fr) 1rem;
+  }
+
+  .axis-labels {
+    margin: 0 1.3rem;
+    font-size: 0.75rem;
+  }
+
+  .rank-labels {
+    font-size: 0.75rem;
+  }
+}
